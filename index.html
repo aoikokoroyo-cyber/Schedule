@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ワクワクデープラン</title>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-family:-apple-system,sans-serif;
 }
 
 body{
@@ -27,65 +25,32 @@ h1{
 
 .instructions{
   background:white;
+  padding:16px;
   border-radius:16px;
-  padding:14px;
   margin-bottom:20px;
-  line-height:1.8;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.container{
-  display:flex;
-  gap:20px;
-  align-items:flex-start;
+.instructions p{
+  margin:6px 0;
 }
 
-.cards-panel{
-  width:35%;
+.section{
   background:white;
-  border-radius:16px;
   padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.schedule-panel{
-  flex:1;
-  background:white;
   border-radius:16px;
-  padding:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.plan-switch{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  align-self:center;
-}
-
-.plan-btn{
-  border:none;
-  border-radius:999px;
-  padding:12px 18px;
-  background:#ddd;
-  font-weight:bold;
-}
-
-.plan-btn.active{
-  background:#4f46e5;
-  color:white;
+  margin-bottom:20px;
 }
 
 .section-title{
   font-weight:bold;
+  font-size:20px;
   margin-bottom:12px;
-  font-size:18px;
 }
 
-#cards{
+.cards{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:10px;
 }
 
 .card{
@@ -97,32 +62,37 @@ h1{
 }
 
 .slot{
-  border:2px dashed #ddd;
-  border-radius:16px;
+  border:1px solid #ddd;
+  border-radius:12px;
   padding:12px;
-  margin-bottom:10px;
-  min-height:72px;
-}
-
-.slot-header{
-  font-weight:bold;
   margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.empty-btn{
-  width:100%;
-  border:none;
-  background:#f0f0f0;
-  border-radius:999px;
-  padding:10px;
+.time{
+  font-weight:bold;
 }
 
-.scheduled-card{
+.activity{
   background:#16a34a;
   color:white;
-  border-radius:24px;
-  padding:12px;
-  text-align:center;
+  padding:8px 14px;
+  border-radius:20px;
+}
+
+.select-btn{
+  border:none;
+  background:#ddd;
+  padding:8px 14px;
+  border-radius:20px;
+}
+
+.plan-title{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 .modal{
@@ -132,67 +102,44 @@ h1{
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:999;
 }
 
 .modal-content{
   background:white;
   width:90%;
-  max-width:420px;
-  border-radius:16px;
+  max-width:400px;
   padding:20px;
+  border-radius:16px;
 }
 
-.modal-title{
-  font-weight:bold;
-  margin-bottom:15px;
-}
-
-.modal-select{
+.modal select{
   width:100%;
   padding:10px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
-.modal-row{
-  margin-bottom:12px;
-}
-
-.modal-btn{
+.modal button{
   width:100%;
-  border:none;
   padding:12px;
-  border-radius:999px;
   margin-top:8px;
+  border:none;
+  border-radius:12px;
 }
 
-.primary{
+.save-btn{
   background:#4f46e5;
   color:white;
 }
 
-.secondary{
-  background:#ddd;
-}
+@media(min-width:900px){
 
-@media(max-width:900px){
-
-  .container{
-    flex-direction:column;
-  }
-
-  .cards-panel{
-    width:100%;
-  }
-
-  .plan-switch{
-    flex-direction:row;
-    width:100%;
-    justify-content:center;
+  .plans{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
   }
 
 }
-
 </style>
 </head>
 <body>
@@ -200,100 +147,63 @@ h1{
 <h1>ワクワクデープラン</h1>
 
 <div class="instructions">
-  <strong>使い方</strong><br>
-  ・時間枠の「選択」を押して予定を入れられるよ<br>
-  ・配置済みの予定をタップすると削除できるよ<br>
-  ・プランはA、Bの２つ設定できるよ
+<p>・時間枠の「選択」を押して予定を入れられるよ</p>
+<p>・配置済みの予定をタップすると削除できるよ</p>
+<p>・プランはA、Bの２つ設定できるよ</p>
 </div>
 
-<div class="container">
+<div class="section">
+<div class="section-title">やりたいこと</div>
 
-  <div class="cards-panel">
+<div class="cards">
+<div class="card">映画を見る</div>
+<div class="card">カラオケ</div>
+<div class="card">プライベートサウナ</div>
+<div class="card">お散歩</div>
+<div class="card">マッサージ</div>
+<div class="card">ご飯（軽め）</div>
+<div class="card">ご飯（ガッツリ）</div>
+<div class="card">お買い物</div>
+</div>
+</div>
 
-    <div class="section-title">
-      やりたいこと
-    </div>
+<div class="plans">
 
-    <div id="cards"></div>
+<div class="section">
+<div class="plan-title">プランA</div>
+<div id="planA"></div>
+</div>
 
-  </div>
-
-  <div class="plan-switch">
-
-    <button
-      id="btnA"
-      class="plan-btn"
-      onclick="switchPlan('A')">
-      プランA
-    </button>
-
-    <button
-      id="btnB"
-      class="plan-btn"
-      onclick="switchPlan('B')">
-      プランB
-    </button>
-
-  </div>
-
-  <div class="schedule-panel">
-
-    <div class="section-title">
-      スケジュール
-    </div>
-
-    <div id="schedule"></div>
-
-  </div>
+<div class="section">
+<div class="plan-title">プランB</div>
+<div id="planB"></div>
+</div>
 
 </div>
 
 <div class="modal" id="modal">
 
-  <div class="modal-content">
+<div class="modal-content">
 
-    <div class="modal-title">
-      予定を設定
-    </div>
+<select id="activity"></select>
 
-    <div class="modal-row">
-      <label>やりたいこと</label>
-      <select id="activity" class="modal-select"></select>
-    </div>
+<select id="startHour"></select>
 
-    <div class="modal-row">
-      <label>開始時間</label>
-      <select id="startHour" class="modal-select"></select>
-    </div>
+<select id="endHour"></select>
 
-    <div class="modal-row">
-      <label>終了時間</label>
-      <select id="endHour" class="modal-select"></select>
-    </div>
+<button class="save-btn" onclick="saveActivity()">
+設定する
+</button>
 
-    <button
-      class="modal-btn primary"
-      onclick="saveActivity()">
-      設定する
-    </button>
+<button onclick="closeModal()">
+キャンセル
+</button>
 
-    <button
-      class="modal-btn secondary"
-      onclick="closeModal()">
-      キャンセル
-    </button>
-
-  </div>
+</div>
 
 </div>
 
 <script>
-
-const HOURS=[];
-
-for(let h=9;h<=21;h++){
-  HOURS.push(h);
-}
 
 const ACTIVITIES=[
 "映画を見る",
@@ -306,148 +216,84 @@ const ACTIVITIES=[
 "お買い物"
 ];
 
-let currentPlan=
-localStorage.getItem("currentPlan") || "A";
-
 let schedules=
 JSON.parse(
-localStorage.getItem("schedules")
-) || {
+localStorage.getItem("wakuwaku")
+)||{
 A:{},
 B:{}
 };
 
-let selectedHour=9;
+let currentPlan="A";
 
 function save(){
 
 localStorage.setItem(
-"schedules",
+"wakuwaku",
 JSON.stringify(schedules)
 );
 
-localStorage.setItem(
-"currentPlan",
-currentPlan
-);
-
 }
 
-function switchPlan(plan){
-
-currentPlan=plan;
-
-save();
-
-updateButtons();
-
-renderSchedule();
-
-}
-
-function updateButtons(){
-
-document
-.getElementById("btnA")
-.classList.toggle(
-"active",
-currentPlan==="A"
-);
-
-document
-.getElementById("btnB")
-.classList.toggle(
-"active",
-currentPlan==="B"
-);
-
-}
-
-function renderCards(){
-
-const cards=
-document.getElementById("cards");
-
-cards.innerHTML="";
-
-ACTIVITIES.forEach(item=>{
-
-const div=
-document.createElement("div");
-
-div.className="card";
-
-div.textContent=item;
-
-cards.appendChild(div);
-
-});
-
-}
-
-function renderSchedule(){
+function renderPlan(planId,target){
 
 const container=
-document.getElementById("schedule");
+document.getElementById(target);
 
 container.innerHTML="";
 
-HOURS.forEach(hour=>{
+for(let h=9;h<=21;h++){
 
 const slot=
 document.createElement("div");
 
 slot.className="slot";
 
+const value=
+schedules[planId][h];
+
 slot.innerHTML=
-`<div class="slot-header">${hour}:00</div>`;
+`
+<div class="time">${h}:00</div>
+`;
+
+if(value){
 
 const activity=
-schedules[currentPlan][hour];
-
-if(activity){
-
-const card=
 document.createElement("div");
 
-card.className=
-"scheduled-card";
+activity.className="activity";
 
-card.textContent=
-activity;
+activity.textContent=value;
 
-card.onclick=()=>{
+activity.onclick=()=>{
 
 if(confirm("削除しますか？")){
 
-delete schedules
-[currentPlan]
-[hour];
+delete schedules[planId][h];
 
 save();
 
-renderSchedule();
+render();
 
 }
 
 };
 
-slot.appendChild(card);
+slot.appendChild(activity);
 
 }else{
 
 const btn=
 document.createElement("button");
 
-btn.className=
-"empty-btn";
+btn.className="select-btn";
 
-btn.textContent=
-"選択";
+btn.textContent="選択";
 
 btn.onclick=()=>{
 
-openModal(hour);
+openModal(planId,h);
 
 };
 
@@ -457,66 +303,49 @@ slot.appendChild(btn);
 
 container.appendChild(slot);
 
-});
+}
 
 }
 
-function openModal(hour){
+let selectedPlan;
+let selectedHour;
 
-selectedHour=hour;
+function openModal(plan,h){
 
-document
-.getElementById("startHour")
-.value=hour;
+selectedPlan=plan;
+selectedHour=h;
 
-document
-.getElementById("endHour")
-.value=hour;
+document.getElementById("startHour").value=h;
+document.getElementById("endHour").value=h;
 
-document
-.getElementById("modal")
-.style.display="flex";
+document.getElementById("modal").style.display="flex";
 
 }
 
 function closeModal(){
 
-document
-.getElementById("modal")
-.style.display="none";
+document.getElementById("modal").style.display="none";
 
 }
 
 function saveActivity(){
 
 const activity=
-document
-.getElementById("activity")
-.value;
+document.getElementById("activity").value;
 
 const start=
 Number(
-document
-.getElementById("startHour")
-.value
+document.getElementById("startHour").value
 );
 
 const end=
 Number(
-document
-.getElementById("endHour")
-.value
+document.getElementById("endHour").value
 );
 
-for(
-let h=start;
-h<=end;
-h++
-){
+for(let h=start;h<=end;h++){
 
-schedules[currentPlan][h]
-=
-activity;
+schedules[selectedPlan][h]=activity;
 
 }
 
@@ -524,65 +353,64 @@ save();
 
 closeModal();
 
-renderSchedule();
+render();
 
 }
 
 function initModal(){
 
 const activity=
-document
-.getElementById("activity");
+document.getElementById("activity");
 
-ACTIVITIES.forEach(item=>{
+ACTIVITIES.forEach(a=>{
 
 const option=
 document.createElement("option");
 
-option.value=item;
-
-option.textContent=item;
+option.value=a;
+option.textContent=a;
 
 activity.appendChild(option);
 
 });
 
 const start=
-document
-.getElementById("startHour");
+document.getElementById("startHour");
 
 const end=
-document
-.getElementById("endHour");
+document.getElementById("endHour");
 
-HOURS.forEach(hour=>{
+for(let h=9;h<=21;h++){
 
 const o1=
 document.createElement("option");
 
-o1.value=hour;
-o1.textContent=
-hour + ":00";
+o1.value=h;
+o1.textContent=`${h}:00`;
 
 start.appendChild(o1);
 
 const o2=
 document.createElement("option");
 
-o2.value=hour;
-o2.textContent=
-hour + ":00";
+o2.value=h;
+o2.textContent=`${h}:00`;
 
 end.appendChild(o2);
 
-});
+}
+
+}
+
+function render(){
+
+renderPlan("A","planA");
+renderPlan("B","planB");
 
 }
 
 initModal();
-updateButtons();
-renderCards();
-renderSchedule();
+render();
 
 </script>
 
