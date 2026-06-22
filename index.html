@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>スケジュールメーカー</title>
+<title>ワクワクデープラン</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
 body{
@@ -21,7 +22,36 @@ body{
 
 h1{
   text-align:center;
-  margin-bottom:20px;
+  margin-bottom:15px;
+}
+
+.instructions{
+  background:white;
+  padding:14px;
+  border-radius:16px;
+  margin-bottom:16px;
+  line-height:1.8;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.plan-switch{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.plan-btn{
+  border:none;
+  padding:10px 18px;
+  border-radius:999px;
+  background:#ddd;
+  font-weight:bold;
+}
+
+.plan-btn.active{
+  background:#4f46e5;
+  color:white;
 }
 
 .container{
@@ -32,52 +62,44 @@ h1{
 
 .cards-panel{
   flex:1;
-  min-width:250px;
+  min-width:280px;
   background:white;
-  padding:15px;
-  border-radius:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
 .schedule-panel{
   flex:2;
   min-width:320px;
   background:white;
-  padding:15px;
-  border-radius:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
+  padding:16px;
+  border-radius:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 
-.input-row{
-  display:flex;
-  gap:8px;
-  margin-bottom:15px;
-}
-
-input{
-  flex:1;
-  padding:10px;
-}
-
-button{
-  padding:10px 15px;
-  cursor:pointer;
+.section-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:12px;
 }
 
 .card{
   background:#4f46e5;
   color:white;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
+  padding:14px;
+  border-radius:24px;
+  margin-bottom:12px;
+  text-align:center;
   cursor:grab;
   touch-action:none;
+  user-select:none;
 }
 
 .slot{
   border:2px dashed #ddd;
-  border-radius:10px;
-  min-height:70px;
+  border-radius:16px;
+  min-height:80px;
   margin-bottom:10px;
   padding:10px;
 }
@@ -90,29 +112,45 @@ button{
 .scheduled-card{
   background:#16a34a;
   color:white;
-  padding:10px;
-  border-radius:8px;
+  padding:12px;
+  border-radius:24px;
+  text-align:center;
 }
 
 @media(max-width:768px){
+
   .container{
     flex-direction:column;
   }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<h1>1日のスケジュールメーカー</h1>
+<h1>ワクワクデープラン</h1>
+
+<div class="plan-switch">
+  <button id="btnA" class="plan-btn" onclick="switchPlan('A')">プランA</button>
+  <button id="btnB" class="plan-btn" onclick="switchPlan('B')">プランB</button>
+</div>
+
+<div class="instructions">
+  <strong>使い方</strong><br>
+  ・左のカードを長押しして時間枠へ移動します。<br>
+  ・配置済みカードをタップすると削除できます。<br>
+  ・プランAとプランBを切り替えて比較できます。<br>
+  ・内容は自動保存されます。
+</div>
 
 <div class="container">
 
   <div class="cards-panel">
 
-    <div class="input-row">
-      <input id="newCard" placeholder="やりたいこと">
-      <button onclick="addCard()">追加</button>
+    <div class="section-title">
+      やりたいこと
     </div>
 
     <div id="cards"></div>
@@ -120,7 +158,13 @@ button{
   </div>
 
   <div class="schedule-panel">
+
+    <div class="section-title">
+      スケジュール
+    </div>
+
     <div id="schedule"></div>
+
   </div>
 
 </div>
@@ -133,22 +177,75 @@ for(let h=9; h<=21; h++){
   HOURS.push(`${h}:00`);
 }
 
-let cards =
-JSON.parse(localStorage.getItem("cards")) ||
-[
-  "読書",
-  "英語",
-  "散歩",
-  "映画"
+const cards = [
+  "映画を見る",
+  "カラオケ",
+  "プライベートサウナ",
+  "お散歩",
+  "マッサージ",
+  "ご飯（軽め）",
+  "ご飯（ガッツリ）",
+  "お買い物"
 ];
 
-let schedule =
-JSON.parse(localStorage.getItem("schedule")) ||
-{};
+let currentPlan =
+localStorage.getItem("currentPlan") || "A";
+
+let schedules =
+JSON.parse(
+  localStorage.getItem("schedules")
+) || {
+  A:{},
+  B:{}
+};
 
 function save(){
-  localStorage.setItem("cards",JSON.stringify(cards));
-  localStorage.setItem("schedule",JSON.stringify(schedule));
+
+  localStorage.setItem(
+    "schedules",
+    JSON.stringify(schedules)
+  );
+
+  localStorage.setItem(
+    "currentPlan",
+    currentPlan
+  );
+
+}
+
+function updatePlanButtons(){
+
+  document
+    .getElementById("btnA")
+    .classList
+    .remove("active");
+
+  document
+    .getElementById("btnB")
+    .classList
+    .remove("active");
+
+  document
+    .getElementById(
+      currentPlan === "A"
+      ? "btnA"
+      : "btnB"
+    )
+    .classList
+    .add("active");
+
+}
+
+function switchPlan(plan){
+
+  currentPlan = plan;
+
+  save();
+
+  updatePlanButtons();
+
+  renderSchedule();
+
 }
 
 function renderCards(){
@@ -156,24 +253,33 @@ function renderCards(){
   const container =
   document.getElementById("cards");
 
-  container.innerHTML="";
+  container.innerHTML = "";
 
   cards.forEach(card=>{
 
     const div =
     document.createElement("div");
 
-    div.className="card";
-    div.draggable=true;
-    div.innerHTML=card;
+    div.className = "card";
 
-    div.addEventListener("dragstart",e=>{
-      e.dataTransfer.setData("text/plain",card);
-    });
+    div.draggable = true;
+
+    div.textContent = card;
+
+    div.addEventListener(
+      "dragstart",
+      e=>{
+        e.dataTransfer.setData(
+          "text/plain",
+          card
+        );
+      }
+    );
 
     container.appendChild(div);
 
   });
+
 }
 
 function renderSchedule(){
@@ -181,60 +287,79 @@ function renderSchedule(){
   const scheduleDiv =
   document.getElementById("schedule");
 
-  scheduleDiv.innerHTML="";
+  scheduleDiv.innerHTML = "";
 
   HOURS.forEach(hour=>{
 
     const slot =
     document.createElement("div");
 
-    slot.className="slot";
+    slot.className = "slot";
 
-    slot.innerHTML=
-    `
-    <div class="slot-header">${hour}</div>
+    slot.innerHTML = `
+      <div class="slot-header">
+        ${hour}
+      </div>
     `;
 
-    slot.addEventListener("dragover",e=>{
-      e.preventDefault();
-    });
+    slot.addEventListener(
+      "dragover",
+      e=>{
+        e.preventDefault();
+      }
+    );
 
-    slot.addEventListener("drop",e=>{
+    slot.addEventListener(
+      "drop",
+      e=>{
 
-      e.preventDefault();
+        e.preventDefault();
 
-      const card =
-      e.dataTransfer.getData("text/plain");
+        const card =
+        e.dataTransfer.getData(
+          "text/plain"
+        );
 
-      schedule[hour]=card;
+        schedules[currentPlan][hour]
+        = card;
 
-      save();
-      renderSchedule();
+        save();
 
-    });
+        renderSchedule();
 
-    if(schedule[hour]){
+      }
+    );
+
+    if(
+      schedules[currentPlan][hour]
+    ){
 
       const card =
       document.createElement("div");
 
-      card.className="scheduled-card";
+      card.className =
+      "scheduled-card";
 
-      card.innerHTML=
-      `
-      ${schedule[hour]}
-      `;
+      card.textContent =
+      schedules[currentPlan][hour];
 
-      card.onclick=()=>{
+      card.addEventListener(
+        "click",
+        ()=>{
 
-        delete schedule[hour];
+          delete schedules
+            [currentPlan]
+            [hour];
 
-        save();
-        renderSchedule();
+          save();
 
-      };
+          renderSchedule();
+
+        }
+      );
 
       slot.appendChild(card);
+
     }
 
     scheduleDiv.appendChild(slot);
@@ -243,25 +368,7 @@ function renderSchedule(){
 
 }
 
-function addCard(){
-
-  const input =
-  document.getElementById("newCard");
-
-  const value =
-  input.value.trim();
-
-  if(!value) return;
-
-  cards.push(value);
-
-  input.value="";
-
-  save();
-  renderCards();
-
-}
-
+updatePlanButtons();
 renderCards();
 renderSchedule();
 
