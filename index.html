@@ -3,48 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ワクワクデープラン</title>
+<h1>🌸 ワクワクデープラン 🌸</h1>
 
 <style>
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:-apple-system,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
 }
 
 body{
-  background:#f5f5f5;
+  background:linear-gradient(
+    180deg,
+    #fff7fb 0%,
+    #fdf6ff 100%
+  );
   padding:16px;
+  color:#555;
 }
 
 h1{
   text-align:center;
   margin-bottom:16px;
+  color:#ff6fa5;
+  font-size:32px;
+  font-weight:700;
 }
 
 .instructions{
   background:white;
   padding:16px;
-  border-radius:16px;
+  border-radius:24px;
   margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(255,111,165,.15);
 }
 
 .instructions p{
-  margin:6px 0;
+  margin:8px 0;
+  line-height:1.6;
 }
 
 .section{
   background:white;
   padding:16px;
-  border-radius:16px;
+  border-radius:24px;
   margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
 }
 
 .section-title{
   font-weight:bold;
   font-size:20px;
   margin-bottom:12px;
+  color:#ff6fa5;
 }
 
 .cards{
@@ -54,17 +66,48 @@ h1{
 }
 
 .card{
-  background:#4f46e5;
+  background:linear-gradient(
+    135deg,
+    #ffb7d5,
+    #ff8fc7
+  );
   color:white;
-  padding:12px;
-  border-radius:24px;
+  padding:14px;
+  border-radius:999px;
   text-align:center;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(255,143,199,.35);
+}
+
+.plans{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.plan-title{
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:12px;
+  text-align:center;
+  padding:10px;
+  border-radius:999px;
+  background:#fafafa;
+}
+
+.section:nth-child(1) .plan-title{
+  color:#5daeff;
+}
+
+.section:nth-child(2) .plan-title{
+  color:#ff9c4a;
 }
 
 .slot{
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:8px;
+  background:#fffdfd;
+  border:2px solid #ffe1ee;
+  border-radius:18px;
+  padding:10px;
   margin-bottom:8px;
   display:flex;
   justify-content:space-between;
@@ -73,33 +116,39 @@ h1{
 
 .time{
   font-weight:bold;
-  font-size:14px;
+  color:#888;
 }
 
 .activity{
-  background:#16a34a;
+  background:linear-gradient(
+    135deg,
+    #8ee4a8,
+    #67d98d
+  );
   color:white;
   padding:8px 14px;
-  border-radius:20px;
+  border-radius:999px;
+  font-weight:bold;
+  box-shadow:0 3px 8px rgba(103,217,141,.25);
 }
 
 .select-btn{
   border:none;
-  background:#ddd;
+  background:#ffd9ec;
+  color:#ff4f96;
   padding:8px 14px;
-  border-radius:20px;
+  border-radius:999px;
+  font-weight:bold;
 }
 
-.plan-title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:12px;
+.select-btn:active{
+  transform:scale(.97);
 }
 
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.35);
   display:none;
   justify-content:center;
   align-items:center;
@@ -110,13 +159,17 @@ h1{
   width:90%;
   max-width:400px;
   padding:20px;
-  border-radius:16px;
+  border-radius:24px;
+  box-shadow:0 8px 30px rgba(0,0,0,.15);
 }
 
 .modal select{
   width:100%;
-  padding:10px;
-  margin-bottom:10px;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:2px solid #ffd9ec;
+  background:white;
 }
 
 .modal button{
@@ -124,18 +177,57 @@ h1{
   padding:12px;
   margin-top:8px;
   border:none;
-  border-radius:12px;
+  border-radius:999px;
+  font-weight:bold;
 }
 
 .save-btn{
-  background:#4f46e5;
+  background:linear-gradient(
+    135deg,
+    #ff8fc7,
+    #ff6fa5
+  );
   color:white;
 }
 
-.plans{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.modal button:not(.save-btn){
+  background:#eee;
+}
+
+@media(max-width:900px){
+
+  h1{
+    font-size:26px;
+  }
+
+  .plans{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .card{
+    font-size:13px;
+    padding:12px;
+  }
+
+  .plan-title{
+    font-size:16px;
+  }
+
+  .time{
+    font-size:13px;
+  }
+
+  .activity{
+    font-size:12px;
+    padding:7px 10px;
+  }
+
+  .select-btn{
+    font-size:12px;
+    padding:7px 10px;
+  }
+
 }
 </style>
 </head>
