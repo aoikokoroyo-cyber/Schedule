@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<h1>🌸 ワクワクデープラン 🌸</h1>
+<title>🌸 ワクワクデープラン 🌸</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -27,7 +28,7 @@ h1{
   text-align:center;
   margin-bottom:16px;
   color:#ff6fa5;
-  font-size:32px;
+  font-size:30px;
   font-weight:700;
 }
 
@@ -85,22 +86,32 @@ h1{
   gap:12px;
 }
 
+.plan-box{
+  background:white;
+  border-radius:24px;
+  padding:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
 .plan-title{
   font-size:20px;
   font-weight:bold;
-  margin-bottom:12px;
   text-align:center;
-  padding:10px;
+  padding:12px;
   border-radius:999px;
-  background:#fafafa;
+  cursor:pointer;
+  user-select:none;
+  margin-bottom:10px;
 }
 
-.section:nth-child(1) .plan-title{
-  color:#5daeff;
+.plan-a{
+  background:#dff1ff;
+  color:#4d9fff;
 }
 
-.section:nth-child(2) .plan-title{
-  color:#ff9c4a;
+.plan-b{
+  background:#ffe9d7;
+  color:#ff9b43;
 }
 
 .slot{
@@ -141,10 +152,6 @@ h1{
   font-weight:bold;
 }
 
-.select-btn:active{
-  transform:scale(.97);
-}
-
 .modal{
   position:fixed;
   inset:0;
@@ -160,7 +167,6 @@ h1{
   max-width:400px;
   padding:20px;
   border-radius:24px;
-  box-shadow:0 8px 30px rgba(0,0,0,.15);
 }
 
 .modal select{
@@ -169,7 +175,6 @@ h1{
   margin-bottom:12px;
   border-radius:12px;
   border:2px solid #ffd9ec;
-  background:white;
 }
 
 .modal button{
@@ -178,7 +183,6 @@ h1{
   margin-top:8px;
   border:none;
   border-radius:999px;
-  font-weight:bold;
 }
 
 .save-btn{
@@ -190,88 +194,94 @@ h1{
   color:white;
 }
 
-.modal button:not(.save-btn){
-  background:#eee;
-}
-
 @media(max-width:900px){
 
   h1{
-    font-size:26px;
+    font-size:24px;
   }
 
   .plans{
     grid-template-columns:1fr 1fr;
-    gap:10px;
   }
 
   .card{
-    font-size:13px;
-    padding:12px;
+    font-size:12px;
   }
 
   .plan-title{
     font-size:16px;
   }
 
-  .time{
-    font-size:13px;
-  }
-
-  .activity{
-    font-size:12px;
-    padding:7px 10px;
-  }
-
-  .select-btn{
-    font-size:12px;
-    padding:7px 10px;
-  }
-
 }
+
 </style>
 </head>
+
 <body>
 
+<h1>🌸 ワクワクデープラン 🌸</h1>
 
 <div class="instructions">
 <p>・時間枠の「選択」を押して予定を入れられるよ</p>
 <p>・配置済みの予定をタップすると削除できるよ</p>
 <p>・プランはA、Bの２つ設定できるよ</p>
+<p>・せーので開いて答え合わせもできるよ</p>
 </div>
 
 <div class="section">
-<div class="section-title">やりたいこと</div>
+
+<div class="section-title">
+やりたいこと
+</div>
 
 <div class="cards">
-<div class="card">映画を見る</div>
-<div class="card">カラオケ</div>
-<div class="card">プライベートサウナ</div>
-<div class="card">お散歩</div>
-<div class="card">マッサージ</div>
-<div class="card">ご飯（軽め）</div>
-<div class="card">ご飯（ガッツリ）</div>
-<div class="card">お買い物</div>
-<div class="card">猫カフェ</div>
-<div class="card">ペットショップ</div>
+
+<div class="card">🎬 映画を見る</div>
+<div class="card">🎤 カラオケ</div>
+<div class="card">🧖 プライベートサウナ</div>
+<div class="card">🚶 お散歩</div>
+<div class="card">💆 マッサージ</div>
+<div class="card">🥗 ご飯（軽め）</div>
+<div class="card">🍖 ご飯（ガッツリ）</div>
+<div class="card">🛍️ お買い物</div>
+<div class="card">🐱 猫カフェ</div>
+<div class="card">🐶 ペットショップ</div>
+
 </div>
+
 </div>
 
 <div class="plans">
 
-<div class="section">
-<div class="plan-title">プランA</div>
+<div class="plan-box">
+
+<div
+id="titleA"
+class="plan-title plan-a">
+💙 プランA ▼
+</div>
+
 <div id="planA"></div>
+
 </div>
 
-<div class="section">
-<div class="plan-title">プランB</div>
+<div class="plan-box">
+
+<div
+id="titleB"
+class="plan-title plan-b">
+🧡 プランB ▶
+</div>
+
 <div id="planB"></div>
-</div>
 
 </div>
 
-<div class="modal" id="modal">
+</div>
+
+<div
+class="modal"
+id="modal">
 
 <div class="modal-content">
 
@@ -281,12 +291,19 @@ h1{
 
 <select id="endHour"></select>
 
-<button class="save-btn" onclick="saveActivity()">
+<button
+class="save-btn"
+onclick="saveActivity()">
+
 設定する
+
 </button>
 
-<button onclick="closeModal()">
+<button
+onclick="closeModal()">
+
 キャンセル
+
 </button>
 
 </div>
@@ -296,17 +313,16 @@ h1{
 <script>
 
 const ACTIVITIES=[
-"映画を見る",
-"カラオケ",
-"プライベートサウナ",
-"お散歩",
-"マッサージ",
-"ご飯（軽め）",
-"ご飯（ガッツリ）",
-"お買い物",
-"猫カフェ",
-"ペットショップ"
-
+"🎬 映画を見る",
+"🎤 カラオケ",
+"🧖 プライベートサウナ",
+"🚶 お散歩",
+"💆 マッサージ",
+"🥗 ご飯（軽め）",
+"🍖 ご飯（ガッツリ）",
+"🛍️ お買い物",
+"🐱 猫カフェ",
+"🐶 ペットショップ"
 ];
 
 let schedules=
@@ -317,190 +333,306 @@ A:{},
 B:{}
 };
 
-let currentPlan="A";
-
-function save(){
-
-localStorage.setItem(
-"wakuwaku",
-JSON.stringify(schedules)
-);
-
-}
-
-function renderPlan(planId,target){
-
-const container=
-document.getElementById(target);
-
-container.innerHTML="";
-
-for(let h=9;h<=21;h++){
-
-const slot=
-document.createElement("div");
-
-slot.className="slot";
-
-const value=
-schedules[planId][h];
-
-slot.innerHTML=
-`
-<div class="time">${h}:00</div>
-`;
-
-if(value){
-
-const activity=
-document.createElement("div");
-
-activity.className="activity";
-
-activity.textContent=value;
-
-activity.onclick=()=>{
-
-if(confirm("削除しますか？")){
-
-delete schedules[planId][h];
-
-save();
-
-render();
-
-}
-
+let planVisible={
+A:true,
+B:false
 };
-
-slot.appendChild(activity);
-
-}else{
-
-const btn=
-document.createElement("button");
-
-btn.className="select-btn";
-
-btn.textContent="選択";
-
-btn.onclick=()=>{
-
-openModal(planId,h);
-
-};
-
-slot.appendChild(btn);
-
-}
-
-container.appendChild(slot);
-
-}
-
-}
 
 let selectedPlan;
 let selectedHour;
 
+function save(){
+
+  localStorage.setItem(
+    "wakuwaku",
+    JSON.stringify(schedules)
+  );
+
+}
+
 function openModal(plan,h){
 
-selectedPlan=plan;
-selectedHour=h;
+  selectedPlan=plan;
+  selectedHour=h;
 
-document.getElementById("startHour").value=h;
-document.getElementById("endHour").value=h;
+  document.getElementById(
+    "startHour"
+  ).value=h;
 
-document.getElementById("modal").style.display="flex";
+  document.getElementById(
+    "endHour"
+  ).value=h;
+
+  document.getElementById(
+    "modal"
+  ).style.display="flex";
 
 }
 
 function closeModal(){
 
-document.getElementById("modal").style.display="none";
+  document.getElementById(
+    "modal"
+  ).style.display="none";
 
 }
 
 function saveActivity(){
 
-const activity=
-document.getElementById("activity").value;
+  const activity=
+  document.getElementById(
+    "activity"
+  ).value;
 
-const start=
-Number(
-document.getElementById("startHour").value
-);
+  const start=
+  Number(
+    document.getElementById(
+      "startHour"
+    ).value
+  );
 
-const end=
-Number(
-document.getElementById("endHour").value
-);
+  const end=
+  Number(
+    document.getElementById(
+      "endHour"
+    ).value
+  );
 
-for(let h=start;h<=end;h++){
+  for(
+    let h=start;
+    h<=end;
+    h++
+  ){
 
-schedules[selectedPlan][h]=activity;
+    schedules[selectedPlan][h]
+    = activity;
 
-}
+  }
 
-save();
+  save();
 
-closeModal();
+  closeModal();
 
-render();
-
-}
-
-function initModal(){
-
-const activity=
-document.getElementById("activity");
-
-ACTIVITIES.forEach(a=>{
-
-const option=
-document.createElement("option");
-
-option.value=a;
-option.textContent=a;
-
-activity.appendChild(option);
-
-});
-
-const start=
-document.getElementById("startHour");
-
-const end=
-document.getElementById("endHour");
-
-for(let h=9;h<=21;h++){
-
-const o1=
-document.createElement("option");
-
-o1.value=h;
-o1.textContent=`${h}:00`;
-
-start.appendChild(o1);
-
-const o2=
-document.createElement("option");
-
-o2.value=h;
-o2.textContent=`${h}:00`;
-
-end.appendChild(o2);
+  render();
 
 }
+
+function renderPlan(planId,target){
+
+  const container=
+  document.getElementById(target);
+
+  container.innerHTML="";
+
+  if(
+    !planVisible[planId]
+  ){
+    return;
+  }
+
+  for(
+    let h=9;
+    h<=21;
+    h++
+  ){
+
+    const slot=
+    document.createElement("div");
+
+    slot.className="slot";
+
+    const value=
+    schedules[planId][h];
+
+    slot.innerHTML=
+    `
+      <div class="time">
+        ${h}:00
+      </div>
+    `;
+
+    if(value){
+
+      const activity=
+      document.createElement("div");
+
+      activity.className=
+      "activity";
+
+      activity.textContent=
+      value;
+
+      activity.onclick=()=>{
+
+        if(
+          confirm(
+            "削除しますか？"
+          )
+        ){
+
+          delete schedules
+          [planId][h];
+
+          save();
+
+          render();
+
+        }
+
+      };
+
+      slot.appendChild(
+        activity
+      );
+
+    }else{
+
+      const btn=
+      document.createElement(
+        "button"
+      );
+
+      btn.className=
+      "select-btn";
+
+      btn.textContent=
+      "選択";
+
+      btn.onclick=()=>{
+
+        openModal(
+          planId,
+          h
+        );
+
+      };
+
+      slot.appendChild(btn);
+
+    }
+
+    container.appendChild(
+      slot
+    );
+
+  }
 
 }
 
 function render(){
 
-renderPlan("A","planA");
-renderPlan("B","planB");
+  document.getElementById(
+    "titleA"
+  ).innerHTML=
+  planVisible.A
+  ? "💙 プランA ▼"
+  : "💙 プランA ▶";
+
+  document.getElementById(
+    "titleB"
+  ).innerHTML=
+  planVisible.B
+  ? "🧡 プランB ▼"
+  : "🧡 プランB ▶";
+
+  renderPlan(
+    "A",
+    "planA"
+  );
+
+  renderPlan(
+    "B",
+    "planB"
+  );
 
 }
+
+function initModal(){
+
+  const activity=
+  document.getElementById(
+    "activity"
+  );
+
+  ACTIVITIES.forEach(a=>{
+
+    const option=
+    document.createElement(
+      "option"
+    );
+
+    option.value=a;
+    option.textContent=a;
+
+    activity.appendChild(
+      option
+    );
+
+  });
+
+  const start=
+  document.getElementById(
+    "startHour"
+  );
+
+  const end=
+  document.getElementById(
+    "endHour"
+  );
+
+  for(
+    let h=9;
+    h<=21;
+    h++
+  ){
+
+    const o1=
+    document.createElement(
+      "option"
+    );
+
+    o1.value=h;
+    o1.textContent=
+    `${h}:00`;
+
+    start.appendChild(o1);
+
+    const o2=
+    document.createElement(
+      "option"
+    );
+
+    o2.value=h;
+    o2.textContent=
+    `${h}:00`;
+
+    end.appendChild(o2);
+
+  }
+
+}
+
+document.getElementById(
+  "titleA"
+).onclick=()=>{
+
+  planVisible.A=
+  !planVisible.A;
+
+  render();
+
+};
+
+document.getElementById(
+  "titleB"
+).onclick=()=>{
+
+  planVisible.B=
+  !planVisible.B;
+
+  render();
+
+};
 
 initModal();
 render();
